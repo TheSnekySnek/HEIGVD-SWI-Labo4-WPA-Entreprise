@@ -49,44 +49,104 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 
 - Comparer [la capture](files/auth.pcap) au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
 	- Requête et réponse d’authentification système ouvert
+
+		Lors du début de l'authntification, le client envoi une demande d'authentification Open System à l'ap qui peut être vu ci-dessous.
+
+		![](figures/auth.png)
+
+		L'ap répond ensuite avec une autre trame d'authentification qui dit au client si l'authentification est bonne.
+
+		![](figures/auth2.png)
+
  	- Requête et réponse d’association (ou reassociation)
+
+		Le client envoi ensuite une Association Request (ou Reassociation Request si il n'était pas connecter avant).
+		![](figures/reassocReq.png)
+
+		L'ap répond avec une Reassociation Response (ou Association Response) qui définit si l'association est un succes.
+		![](figures/reassocResp.png)
+
+
 	- Négociation de la méthode d’authentification entreprise
+		
+		Dans cette phase, on peut voir que l'ap envoi la requete d'utilisation de la méthode d’authentification entreprise EAP-TLS.
+
+		Ensuite le client lui répond qu'il ne l'accepte pas (Leagy Nak).
+
+		L'ap envoi ensuite une autre requete pour la methode EAP-PEAP que le client accepte.
+		![](figures/negociation.png)
+
 	- Phase d’initiation. Arrivez-vous à voir l’identité du client ?
+
+		On peut voir que l'Authentificateur demande au Suppliant son identité avec une trame Request, Identity.
+
+		![](figures/reqId.png)
+
+
+		Le Suppliant lui répond avec une trame Response, Identity qui contient son identité, **einet\joel.gonin**.
+
+		![](figures/respId.png)
+
 	- Phase hello :
+		Dans cette phase le client envoi une trame Client Hello
+		![](figures/hello1.png)
+		Nous pouvons identifier les informations transmises dans cette trame:
 		- Version TLS
+		
+			TLS 1.2
 		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+		
+			31 suites cryptographiques Ex. **TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384**
 		- Nonces
+
+			Le nombre aléatoire (Random) est **955bf5b716e24a729c4b60609b8ce482014ac38f1e9cb8cf2bf8fd30bf8995f1**
+
 		- Session ID
+
+			Le session ID est **9f1bbf1e90b88366a836db08d659f906a637ac31920e06f6…**
 	- Phase de transmission de certificats
+		![](figures/cert.png)
 	 	- Echanges des certificats
+		 
+		 Nous pouvons voir un example de transmition d'un certificat dans cette trame.
+		 ![](figures/certEx.png)
 		- Change cipher spec
+		
+			Ici l'Authentificateur demande à changer de cipher et va communiquer avec celui-ci pour le reste de la communication.
+			![](figures/cipherChange.png)
 	- Authentification interne et transmission de la clé WPA (échange chiffré, vu comme « Application data »)
+	![](figures/wpaAuth.png)
+	La transmission de la clé WPA ce fait dans les trames Application Data qui sont chiffrée avec le nouveau cipher.
+
+	L'authentification interne peut etre vue par les trames Response, Protected EAP et la réponse Success.
+
 	- 4-way handshake
+	![](figures/handshake.png)
 
 ### Répondez aux questions suivantes :
  
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
 > **_Réponse :_** 
-
+> EAP-TLS puis EAP-PEAP
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
 > **_Réponse:_** 
-
+> EAP-PEAP
 ---
 
 > **_Question:_** Lors de l’échange de certificats entre le serveur d’authentification et le client :
 > 
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
-> 
+>  
 > **_Réponse:_**
-> 
+> Oui, le serveur envoi les certificats au client...
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 > 
 > **_Réponse:_**
-> 
+> 	Non, le client n'as pas besoin d'envoyer de certificats.
 
 ---
 
