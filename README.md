@@ -50,7 +50,7 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 - Comparer [la capture](files/auth.pcap) au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
 	- Requête et réponse d’authentification système ouvert
 
-		Lors du début de l'authntification, le client envoi une demande d'authentification Open System à l'ap qui peut être vu ci-dessous.
+		Lors du début de l'authentification, le client envoi une demande d'authentification Open System à l'ap qui peut être vu ci-dessous.
 
 		![](figures/auth.png)
 
@@ -69,11 +69,11 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 
 	- Négociation de la méthode d’authentification entreprise
 		
-		Dans cette phase, on peut voir que l'ap envoi la requete d'utilisation de la méthode d’authentification entreprise EAP-TLS.
+		Dans cette phase, on peut voir que l'ap envoi la requête d'utilisation de la méthode d’authentification entreprise EAP-TLS.
 
-		Ensuite le client lui répond qu'il ne l'accepte pas (Leagy Nak).
+		Ensuite le client lui répond qu'il ne l'accepte pas (Legacy Nak).
 
-		L'ap envoi ensuite une autre requete pour la methode EAP-PEAP que le client accepte.
+		L'ap envoi ensuite une autre requête pour la methode EAP-PEAP que le client accepte.
 		![](figures/negociation.png)
 
 	- Phase d’initiation. Arrivez-vous à voir l’identité du client ?
