@@ -142,11 +142,11 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
 >  
 > **_Réponse:_**
-> Oui, le serveur envoi les certificats au client...
+> Oui, le serveur envoi un vertificat au client pour qu'il puisse l'utiliser pour communiquer avec le serveur en TLS par la suite.
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 > 
 > **_Réponse:_**
-> 	Non, le client n'as pas besoin d'envoyer de certificats.
+> 	Non, le client n'envoye pas de certificats lorsque la methode PEAP est utilisée.
 
 ---
 
